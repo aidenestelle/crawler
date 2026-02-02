@@ -21,12 +21,20 @@ function shouldLog(level: LogLevel): boolean {
   return LOG_LEVELS[level] >= LOG_LEVELS[currentLevel]
 }
 
+function formatArg(arg: unknown): string {
+  if (arg instanceof Error) {
+    return `${arg.name}: ${arg.message}${arg.stack ? '\n' + arg.stack : ''}`
+  }
+  if (typeof arg === 'object' && arg !== null) {
+    return JSON.stringify(arg, null, 2)
+  }
+  return String(arg)
+}
+
 function formatMessage(level: LogLevel, message: string, ...args: unknown[]): string {
   const timestamp = formatTimestamp()
   const levelStr = level.toUpperCase().padEnd(5)
-  const argsStr = args.length > 0 ? ' ' + args.map(arg =>
-    typeof arg === 'object' ? JSON.stringify(arg, null, 2) : String(arg)
-  ).join(' ') : ''
+  const argsStr = args.length > 0 ? ' ' + args.map(formatArg).join(' ') : ''
   return `[${timestamp}] ${levelStr} ${message}${argsStr}`
 }
 
