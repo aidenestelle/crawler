@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  crawler:
+    build: .
+    container_name: semdash-crawler
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+    volumes:
+      - crawler-data:/app/data
+    # For development, you can mount the .env file
+    # env_file:
+    #   - .env
+
+volumes:
+  crawler-data:
