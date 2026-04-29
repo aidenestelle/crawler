@@ -1,0 +1,36 @@
+# Estellebot staging — Fly.io manifest.
+# NOTE: Fly.io is provisional (pending CEO decision ceo-014). This file is
+# intentionally small so switching to Railway or a VPS is a small edit.
+# No HTTP [[services]] block — estellebot is a worker, not a web app.
+# The /healthz endpoint exists for liveness/readiness but is not publicly routed.
+
+app = "estellebot-staging"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  WORKER_CONCURRENCY = "3"
+  AI_VERIFY_TIMEOUT_MS = "15000"
+  PORT = "8080"
+
+[processes]
+  worker = "node dist/index.js"
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[deploy]
+  strategy = "rolling"
+  max_unavailable = 1
+
+# Secrets (NOT stored in this file — set via `fly secrets set`):
+#   SUPABASE_URL
+#   SUPABASE_SERVICE_KEY
+#   GEMINI_API_KEY         (optional)
+#   DEEPSEEK_API_KEY       (optional)
+#   OLLAMA_HOST            (optional)

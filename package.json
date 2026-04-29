@@ -1,7 +1,7 @@
 {
-  "name": "semdash-crawler-worker",
-  "version": "1.0.0",
-  "description": "Self-hosted SEO crawler worker for SemDash",
+  "name": "estellebot-worker",
+  "version": "1.0.0-beta.1",
+  "description": "HIPAA deep-scan worker for Estelle Digital",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -10,18 +10,16 @@
     "start": "node dist/index.js",
     "test": "vitest",
     "test:run": "vitest run",
-    "lint": "eslint src --ext .ts"
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@google/genai": "^0.7.0",
     "@supabase/supabase-js": "^2.47.10",
     "cheerio": "^1.0.0",
     "dotenv": "^16.4.7",
-    "playwright": "^1.49.1",
-    "robots-parser": "^3.0.1",
-    "crypto-js": "^4.2.0"
+    "playwright": "^1.49.1"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.2",
     "@types/node": "^22.10.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2",

@@ -1,19 +1,14 @@
+# Estellebot — local dev compose
+# For local dev only. Production deploys via `fly deploy` (see docs/deploy.md).
 version: '3.8'
 
 services:
-  crawler:
+  estellebot:
     build: .
-    container_name: semdash-crawler
+    image: estellebot:local
+    container_name: estellebot
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
-    volumes:
-      - crawler-data:/app/data
-    # For development, you can mount the .env file
-    # env_file:
-    #   - .env
-
-volumes:
-  crawler-data:
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"

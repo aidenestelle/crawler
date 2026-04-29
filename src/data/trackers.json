@@ -1,0 +1,202 @@
+[
+  {
+    "pattern": "connect\\.facebook\\.net|fbevents\\.js|facebook\\.com/tr",
+    "name": "Facebook Pixel",
+    "vendor": "Meta",
+    "riskLevel": "high",
+    "description": "Tracks user behavior and sends data to Meta servers. No BAA available.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "analytics\\.tiktok\\.com|tiktok\\.com/i18n/pixel",
+    "name": "TikTok Pixel",
+    "vendor": "TikTok",
+    "riskLevel": "high",
+    "description": "Tracks conversions and sends data to TikTok servers. No BAA available.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "google-analytics\\.com/analytics\\.js|google-analytics\\.com/ga\\.js",
+    "name": "Google Analytics (Universal)",
+    "vendor": "Google",
+    "riskLevel": "high",
+    "description": "Legacy analytics that transmits user data to Google. No BAA available for UA.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "googletagmanager\\.com/gtag|google-analytics\\.com/g/collect",
+    "name": "Google Analytics 4",
+    "vendor": "Google",
+    "riskLevel": "high",
+    "description": "Transmits user data to Google. Google does NOT offer a BAA for Google Analytics (any version). Using GA4 on pages that handle PHI is a known HIPAA violation vector per HHS OCR guidance (2022, reaffirmed 2024).",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "googletagmanager\\.com/gtm\\.js",
+    "name": "Google Tag Manager",
+    "vendor": "Google",
+    "riskLevel": "high",
+    "description": "Tag management system that can load any third-party script. High risk due to dynamic script loading.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "static\\.hotjar\\.com|hotjar\\.com/c/hotjar",
+    "name": "Hotjar",
+    "vendor": "Hotjar",
+    "riskLevel": "high",
+    "description": "Session recording and heatmap tool. Records user interactions including form inputs.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "fullstory\\.com/s/fs\\.js|edge\\.fullstory\\.com",
+    "name": "FullStory",
+    "vendor": "FullStory",
+    "riskLevel": "high",
+    "description": "Session replay tool that captures detailed user interactions.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "clarity\\.ms/tag|clarity\\.ms/s",
+    "name": "Microsoft Clarity",
+    "vendor": "Microsoft",
+    "riskLevel": "high",
+    "description": "Session recording and heatmap tool. Captures user behavior data.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "snap\\.licdn\\.com/li\\.lms-analytics|linkedin\\.com/px",
+    "name": "LinkedIn Insight Tag",
+    "vendor": "LinkedIn",
+    "riskLevel": "high",
+    "description": "Tracks conversions and retargeting. Sends data to LinkedIn.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "static\\.ads-twitter\\.com|t\\.co/i/adsct|platform\\.twitter\\.com/widgets",
+    "name": "Twitter/X Pixel",
+    "vendor": "X Corp",
+    "riskLevel": "high",
+    "description": "Conversion tracking pixel. Sends data to X/Twitter servers.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "js\\.hs-scripts\\.com|js\\.hs-analytics\\.net|js\\.hubspot\\.com",
+    "name": "HubSpot Tracking",
+    "vendor": "HubSpot",
+    "riskLevel": "warning",
+    "description": "Marketing automation tracking. HubSpot offers BAA for Enterprise customers.",
+    "baaAvailable": true
+  },
+  {
+    "pattern": "widget\\.intercom\\.io|js\\.intercomcdn\\.com",
+    "name": "Intercom",
+    "vendor": "Intercom",
+    "riskLevel": "warning",
+    "description": "Customer messaging platform. May collect PHI through chat. BAA available on specific plans.",
+    "baaAvailable": true
+  },
+  {
+    "pattern": "js\\.driftt\\.com|drift\\.com",
+    "name": "Drift",
+    "vendor": "Drift/Salesloft",
+    "riskLevel": "warning",
+    "description": "Conversational marketing tool. Chat may collect PHI.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "cdn\\.livechatinc\\.com|livechat\\.com",
+    "name": "LiveChat",
+    "vendor": "LiveChat",
+    "riskLevel": "warning",
+    "description": "Live chat widget. Patients may share PHI in chat messages.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "static\\.zdassets\\.com|zendesk\\.com/embeddable",
+    "name": "Zendesk",
+    "vendor": "Zendesk",
+    "riskLevel": "warning",
+    "description": "Customer support widget. Zendesk offers HIPAA-compliant plans with BAA.",
+    "baaAvailable": true
+  },
+  {
+    "pattern": "cdn\\.mouseflow\\.com|mouseflow\\.com",
+    "name": "Mouseflow",
+    "vendor": "Mouseflow",
+    "riskLevel": "high",
+    "description": "Session replay and analytics tool. Records user interactions.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "cdn\\.heapanalytics\\.com|heapanalytics\\.com",
+    "name": "Heap Analytics",
+    "vendor": "Heap",
+    "riskLevel": "high",
+    "description": "Auto-capture analytics that records all user interactions.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "cdn\\.segment\\.com|api\\.segment\\.io",
+    "name": "Segment",
+    "vendor": "Twilio",
+    "riskLevel": "warning",
+    "description": "Customer data platform. Can be configured for HIPAA compliance with BAA.",
+    "baaAvailable": true
+  },
+  {
+    "pattern": "redditstatic\\.com/ads|reddit\\.com/api/v2/pixel|events\\.redditmedia\\.com",
+    "name": "Reddit Pixel",
+    "vendor": "Reddit",
+    "riskLevel": "high",
+    "description": "Conversion tracking pixel. Transmits user data to Reddit. No BAA available.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "s\\.pinimg\\.com/ct|ct\\.pinterest\\.com",
+    "name": "Pinterest Tag",
+    "vendor": "Pinterest",
+    "riskLevel": "high",
+    "description": "Conversion tracking for Pinterest ads. No BAA available.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "sc-static\\.net/scevent|tr\\.snapchat\\.com",
+    "name": "Snapchat Pixel",
+    "vendor": "Snap",
+    "riskLevel": "high",
+    "description": "Conversion tracking for Snapchat ads. No BAA available.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "bat\\.bing\\.com|bat\\.r\\.msn\\.com",
+    "name": "Microsoft Bing UET",
+    "vendor": "Microsoft",
+    "riskLevel": "high",
+    "description": "Universal Event Tracking for Microsoft Ads. No BAA available for Bing Ads.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "doubleclick\\.net|googleadservices\\.com|googlesyndication\\.com",
+    "name": "Google Ads / DoubleClick",
+    "vendor": "Google",
+    "riskLevel": "high",
+    "description": "Google advertising network including remarketing tags. No BAA available for advertising products.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "static\\.criteo\\.net|criteo\\.com/js",
+    "name": "Criteo",
+    "vendor": "Criteo",
+    "riskLevel": "high",
+    "description": "Retargeting and display advertising platform. No BAA available.",
+    "baaAvailable": false
+  },
+  {
+    "pattern": "widgets\\.outbrain\\.com|cdn\\.taboola\\.com",
+    "name": "Outbrain / Taboola",
+    "vendor": "Outbrain/Taboola",
+    "riskLevel": "high",
+    "description": "Content recommendation networks that track users across sites. No BAA available.",
+    "baaAvailable": false
+  }
+]

@@ -1,0 +1,40 @@
+services:
+  estellebot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: estellebot:prod
+    container_name: estellebot
+    restart: unless-stopped
+
+    environment:
+      NODE_ENV: production
+      PORT: "8080"
+      WORKER_CONCURRENCY: "3"
+      AI_VERIFY_TIMEOUT_MS: "15000"
+      REAPER_INTERVAL_MS: "30000"
+      REAPER_TIMEOUT_MS: "180000"
+      GRACEFUL_SHUTDOWN_MS: "120000"
+      LOG_LEVEL: info
+      HIPAA_DEEP_SCAN_ENABLED: "true"
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      OLLAMA_HOST: ${OLLAMA_HOST:-}
+
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8080/healthz || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    mem_limit: 1536m
+    cpus: 1.5
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"

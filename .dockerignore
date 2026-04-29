@@ -1,9 +1,39 @@
+# Build artefacts
 node_modules
 dist
+
+# Secrets / env
 .env
-.env.local
-*.log
+.env.*
+!.env.example
+
+# VCS
 .git
 .gitignore
+.gitattributes
+
+# Tests
+**/*.test.ts
+**/*.spec.ts
+vitest.config.ts
+coverage
+
+# Docs / handoffs
+docs
 README.md
+*.md
+
+# Workspace state (outside build context but defensive)
+../.estelle-workspace
+
+# Editor / OS
+.vscode
+.idea
 .DS_Store
+Thumbs.db
+
+# Logs / tmp
+*.log
+npm-debug.log*
+pnpm-debug.log*
+tmp

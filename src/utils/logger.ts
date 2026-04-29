@@ -1,5 +1,9 @@
 /**
- * Simple logger utility for the crawler worker
+ * Estellebot logger
+ *
+ * Minimal leveled logger. Adds a `[estellebot]` tag to every output so logs
+ * stay greppable in Docker / Fly.io aggregated output. Structured JSON output
+ * is introduced in Epic 5 (T-5.1).
  */
 
 type LogLevel = 'debug' | 'info' | 'warn' | 'error'
@@ -12,6 +16,7 @@ const LOG_LEVELS: Record<LogLevel, number> = {
 }
 
 const currentLevel = (process.env.LOG_LEVEL as LogLevel) || 'info'
+const TAG = '[estellebot]'
 
 function formatTimestamp(): string {
   return new Date().toISOString()
@@ -35,7 +40,10 @@ function formatMessage(level: LogLevel, message: string, ...args: unknown[]): st
   const timestamp = formatTimestamp()
   const levelStr = level.toUpperCase().padEnd(5)
   const argsStr = args.length > 0 ? ' ' + args.map(formatArg).join(' ') : ''
-  return `[${timestamp}] ${levelStr} ${message}${argsStr}`
+  // If the caller already prefixed with [estellebot] or a sub-tag, don't double-prefix.
+  const needsTag = !message.startsWith('[')
+  const body = needsTag ? `${TAG} ${message}` : message
+  return `[${timestamp}] ${levelStr} ${body}${argsStr}`
 }
 
 export const logger = {
@@ -61,12 +69,5 @@ export const logger = {
     if (shouldLog('error')) {
       console.error(formatMessage('error', message, ...args))
     }
-  },
-
-  /**
-   * Log with crawl context
-   */
-  crawl(crawlId: string, level: LogLevel, message: string, ...args: unknown[]): void {
-    this[level](`[Crawl:${crawlId.slice(0, 8)}] ${message}`, ...args)
   },
 }

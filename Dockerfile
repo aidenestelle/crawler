@@ -1,33 +1,49 @@
-# SemDash Crawler Worker Dockerfile
-# Uses Playwright's official image with browsers pre-installed
+# Estellebot — HIPAA deep-scan worker
+# Multi-stage build: deps -> build -> runtime
+# Base image tracks the Playwright version pinned in package.json (1.49.1).
 
-FROM mcr.microsoft.com/playwright:v1.57.0-jammy
-
-# Set working directory
+# -----------------------------------------------------------------------------
+# Stage 1: deps — install all deps (dev + prod) for the build step.
+# -----------------------------------------------------------------------------
+FROM mcr.microsoft.com/playwright:v1.49.1-noble AS deps
 WORKDIR /app
-
-# Install pnpm
-RUN npm install -g pnpm
-
-# Copy package files
+RUN npm install -g pnpm@9
 COPY package.json pnpm-lock.yaml* ./
-
-# Install dependencies
 RUN pnpm install --frozen-lockfile || pnpm install
 
-# Copy source code
+# -----------------------------------------------------------------------------
+# Stage 2: build — compile TypeScript to dist/.
+# -----------------------------------------------------------------------------
+FROM mcr.microsoft.com/playwright:v1.49.1-noble AS build
+WORKDIR /app
+RUN npm install -g pnpm@9
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
-# Build TypeScript
 RUN pnpm run build
 
-# Expose port (optional, for health checks)
-EXPOSE 3000
+# -----------------------------------------------------------------------------
+# Stage 3: runtime — prod-only node_modules + compiled dist.
+# -----------------------------------------------------------------------------
+FROM mcr.microsoft.com/playwright:v1.49.1-noble AS runtime
+WORKDIR /app
 
-# Set environment variables (these should be overridden at runtime)
 ENV NODE_ENV=production
-ENV SUPABASE_URL=""
-ENV SUPABASE_SERVICE_KEY=""
+ENV PORT=8080
 
-# Run the crawler
+RUN npm install -g pnpm@9
+
+# Install prod-only dependencies (no dev deps).
+COPY package.json pnpm-lock.yaml* ./
+RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
+
+# Copy compiled output from build stage.
+COPY --from=build /app/dist ./dist
+
+# /healthz endpoint listens on PORT (default 8080).
+EXPOSE 8080
+
+LABEL org.opencontainers.image.title="estellebot"
+LABEL org.opencontainers.image.description="HIPAA deep-scan worker for Estelle Digital"
+LABEL org.opencontainers.image.source="https://github.com/estelledigital/estellebot"
+
 CMD ["node", "dist/index.js"]
