@@ -39,6 +39,9 @@ RUN pnpm install --prod --frozen-lockfile || pnpm install --prod
 # Copy compiled output from build stage.
 COPY --from=build /app/dist ./dist
 
+# Copy non-TS assets that tsc does not bundle (data files, vendored JSON).
+COPY --from=build /app/src/data ./dist/data
+
 # /healthz endpoint listens on PORT (default 8080).
 EXPOSE 8080
 
